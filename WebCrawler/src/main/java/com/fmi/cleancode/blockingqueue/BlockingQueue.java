@@ -4,63 +4,20 @@ import java.util.AbstractQueue;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class BlockedQueue<T> extends AbstractQueue<T> {
-    private LinkedList<T> l = new LinkedList<T>();
+public class BlockingQueue<T> extends AbstractQueue<T> {
+    private LinkedList<T> l = new LinkedList<>();
     private int maxSize;
-    public BlockedQueue(){
-        this.maxSize=100;
-    }
-    public BlockedQueue(int mSize){
-        this.maxSize=mSize;
-    }
-    public void setMaxSize(int maxSize){
-        this.maxSize=maxSize;
-    }
-    @Override
-    public synchronized boolean offer(T e) {
-        while (l.size() >= maxSize)
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        notifyAll();
-        return l.offer(e);
+
+    public BlockingQueue() {
+        this.maxSize = 100;
     }
 
-    @Override
-    public T peek() {
-        return l.peek();
-    }
-
-    @Override
-    public synchronized T poll() {
-
-        while (l.size() == 0)
-            try {
-//                System.out.println("trying to poll from an empty queue..");
-                wait();
-//                System.out.println("still waiting");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        if (l.size() <= maxSize)
-            notifyAll();
-        return l.poll();
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return l.iterator();
-    }
-
-    @Override
-    public int size() {
-        return l.size();
+    public BlockingQueue(int mSize) {
+        this.maxSize = mSize;
     }
 
     public static void main(String[] args) throws InterruptedException {
-        final BlockedQueue<Integer> bq = new BlockedQueue<Integer>();
+        final BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
         // Thread t1 = new Thread(new Runnable() {
         // @Override
         // public void run() {
@@ -98,7 +55,7 @@ public class BlockedQueue<T> extends AbstractQueue<T> {
             @Override
             public void run() {
                 for (int i = 1; i <= 20; i++) {
-                    bq.offer(i);
+                    blockingQueue.offer(i);
                     System.out.println("element " + i + " offered to queue..");
                 }
             }
@@ -116,7 +73,7 @@ public class BlockedQueue<T> extends AbstractQueue<T> {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    System.out.println("element " + bq.poll() + " polled from queue..");
+                    System.out.println("element " + blockingQueue.poll() + " polled from queue..");
                 }
             }
 
@@ -125,6 +82,50 @@ public class BlockedQueue<T> extends AbstractQueue<T> {
         t2.start();
         t1.join();
         t2.join();
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    @Override
+    public synchronized boolean offer(T e) {
+        while (l.size() >= maxSize)
+            try {
+                wait();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        notifyAll();
+        return l.offer(e);
+    }
+
+    @Override
+    public T peek() {
+        return l.peek();
+    }
+
+    @Override
+    public synchronized T poll() {
+        while (l.size() == 0)
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        if (l.size() <= maxSize)
+            notifyAll();
+        return l.poll();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return l.iterator();
+    }
+
+    @Override
+    public int size() {
+        return l.size();
     }
 
 }

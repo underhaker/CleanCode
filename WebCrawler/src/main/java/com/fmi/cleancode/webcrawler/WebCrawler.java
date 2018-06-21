@@ -1,5 +1,6 @@
 package com.fmi.cleancode.webcrawler;
 
+import com.fmi.cleancode.utils.HttpClientUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -52,7 +53,7 @@ public class WebCrawler {
                 isHomeUrl = true;
             }
 
-            String urlContent = getHtmlContent(url.toURI());
+            String urlContent = HttpClientUtils.getHtmlContent(url.toURI());
 
             if (!usedLinks.contains(url.toString())) {
                 usedLinks.add(url.toString());
@@ -91,13 +92,7 @@ public class WebCrawler {
         }
     }
 
-    private String getHtmlContent(URI uri) throws IOException {
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(uri);
-        CloseableHttpResponse response = client.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        return EntityUtils.toString(entity, "UTF-8");
-    }
+
 
     private List<String> getAllLinks(String content) {
         ArrayList<String> resultList = new ArrayList<>();
