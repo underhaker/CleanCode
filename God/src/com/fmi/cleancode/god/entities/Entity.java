@@ -1,10 +1,10 @@
 package com.fmi.cleancode.god.entities;
 
 
-import com.fmi.cleancode.god.Point2D;
-import com.fmi.cleancode.god.RandomNumberGenerator;
-import com.fmi.cleancode.god.State;
-import com.fmi.cleancode.god.entities.enums.EntityType;
+import com.fmi.cleancode.god.utils.Point2D;
+import com.fmi.cleancode.god.utils.RandomNumberGenerator;
+import com.fmi.cleancode.god.enums.EntityType;
+import com.fmi.cleancode.god.enums.State;
 
 public class Entity {
     final static private int PLANET_LENGTH = 400;
@@ -15,21 +15,21 @@ public class Entity {
     protected Point2D position;
     protected double strength;
     protected State state;
-    protected boolean isAlive = true;
     protected EntityType entity;
+    private boolean isAlive = true;
 
     //upper bound for entities to move
     public Entity() {
         RandomNumberGenerator rng = new RandomNumberGenerator();
-        this.name = rng.generateName(EntityType.entity);
+        this.name = rng.generateName(EntityType.ENTITY);
         this.energy = rng.generateStrength() * 2;
         this.size = rng.generateNumber();
         this.weight = rng.generateNumber();
         this.position = new Point2D(rng.generateCoordinate(), rng.generateCoordinate());
         this.strength = rng.generateStrength();
-        this.state = State.Unknown;
+        this.state = State.UNKNOWN;
         this.isAlive = true;
-        this.entity = EntityType.entity;
+        this.entity = EntityType.ENTITY;
     }
 
     //default constructor with random values
@@ -41,7 +41,7 @@ public class Entity {
         this.position = position;
         this.strength = strength;
         this.state = state;
-        this.entity = EntityType.entity;
+        this.entity = EntityType.ENTITY;
     }
 
     public String getName() {
@@ -104,8 +104,16 @@ public class Entity {
         this.state = state;
     }
 
-    public void Attack(Entity ent) {
-        this.setState(State.Attacking);
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public void attack(Entity ent) {
+        this.setState(State.ATTACKING);
         System.out.println("status:" + this.getName() + " attacked " + ent.getName() + " for " + this.getStrength()
                 + " damage..");
         ent.setEnergy(ent.getEnergy() - this.getStrength());
@@ -115,7 +123,7 @@ public class Entity {
         }
     }
 
-    //moves the entity to X position(X is randomly generated)
+    //moves the ENTITY to X position(X is randomly generated)
     public void move() {
         RandomNumberGenerator rng = new RandomNumberGenerator();
         int randomPosition = rng.generateNumberRange(2);
@@ -136,6 +144,6 @@ public class Entity {
                 position.setY(deltaPositionY);
             }
         }
-        this.setState(State.Moving);
+        this.setState(State.MOVING);
     }
 }
