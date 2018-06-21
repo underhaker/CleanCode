@@ -1,4 +1,4 @@
-package myatomicinteger;
+package com.fmi.cleancode.myatomicinteger;
 
 public class TestInteger {
     private static MyAtomicInteger counter = new MyAtomicInteger();

@@ -1,4 +1,4 @@
-package myatomicinteger;
+package com.fmi.cleancode.myatomicinteger;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

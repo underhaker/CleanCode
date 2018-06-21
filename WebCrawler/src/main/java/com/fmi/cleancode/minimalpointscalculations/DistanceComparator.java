@@ -1,4 +1,4 @@
-package minimalpointscalculations;
+package com.fmi.cleancode.minimalpointscalculations;
 
 import java.util.Comparator;
 

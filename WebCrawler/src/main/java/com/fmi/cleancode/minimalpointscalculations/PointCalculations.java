@@ -1,4 +1,4 @@
-package minimalpointscalculations;
+package com.fmi.cleancode.minimalpointscalculations;
 
 import java.util.ArrayList;
 import java.util.List;

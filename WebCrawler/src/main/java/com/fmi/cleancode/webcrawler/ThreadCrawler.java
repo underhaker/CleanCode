@@ -1,4 +1,4 @@
-package webcrawler;
+package com.fmi.cleancode.webcrawler;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,7 +20,7 @@ public class ThreadCrawler implements Runnable {
     @Override
     public void run() {
             try {
-                WebCrawler.webCrawler(url, needle);
+                WebCrawler.crawl(url, needle);
             } catch (ClientProtocolException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

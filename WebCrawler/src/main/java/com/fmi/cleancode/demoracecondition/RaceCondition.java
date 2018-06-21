@@ -1,4 +1,4 @@
-package demoracecondition;
+package com.fmi.cleancode.demoracecondition;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

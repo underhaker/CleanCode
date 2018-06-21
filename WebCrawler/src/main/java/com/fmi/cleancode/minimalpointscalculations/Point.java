@@ -1,4 +1,4 @@
-package minimalpointscalculations;
+package com.fmi.cleancode.minimalpointscalculations;
 
 public class Point {
     private double x;

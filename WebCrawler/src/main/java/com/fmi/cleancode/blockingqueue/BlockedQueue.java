@@ -1,4 +1,4 @@
-package blockingqueue;
+package com.fmi.cleancode.blockingqueue;
 
 import java.util.AbstractQueue;
 import java.util.Iterator;
