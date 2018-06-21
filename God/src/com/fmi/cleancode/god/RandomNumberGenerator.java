@@ -1,5 +1,7 @@
 package com.fmi.cleancode.god;
 
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

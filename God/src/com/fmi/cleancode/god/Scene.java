@@ -1,5 +1,8 @@
 package com.fmi.cleancode.god;
 
+import com.fmi.cleancode.god.entities.Entity;
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -2,7 +2,7 @@ package com.fmi.cleancode.god;
 
 public class Main {
     public static void main(String[] args) {
-        MainGame mg = new MainGame();
-        mg.StartGame();
+        MainGame mainGame = new MainGame();
+        mainGame.StartGame();
     }
 }

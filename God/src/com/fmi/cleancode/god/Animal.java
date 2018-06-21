@@ -1,6 +1,9 @@
 package com.fmi.cleancode.god;
 
 
+import com.fmi.cleancode.god.entities.Entity;
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 public class Animal extends Entity {
     public Animal(){
 

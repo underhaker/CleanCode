@@ -1,6 +1,8 @@
 package com.fmi.cleancode.god;
 
 
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 public class Human extends Animal{
     public Human(){
         super();

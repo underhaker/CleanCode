@@ -1,5 +1,8 @@
 package com.fmi.cleancode.god;
 
+import com.fmi.cleancode.god.entities.Entity;
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -112,10 +115,10 @@ public class Simulator {
     private void moveEntities(List<Entity> entities) throws InterruptedException {
         for (Entity et : entities) {
             Thread.sleep(100);
-            et.Move();
+            et.move();
         }
     }
-    //iterates through entities ArrayList and performs Move method on them
+    //iterates through entities ArrayList and performs move method on them
     private void executeAnAction(Planet pl, List<Entity> entities) throws InterruptedException {
         RandomNumberGenerator rng = new RandomNumberGenerator();
         int actionRand = 0;

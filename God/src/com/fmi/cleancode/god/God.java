@@ -1,6 +1,8 @@
 package com.fmi.cleancode.god;
 
 
+import com.fmi.cleancode.god.entities.enums.EntityType;
+
 public class God extends Human{
     public God(String name, double energy, double size, double weight, Point2D position, double strength, State state) {
         super(name, energy, size, weight, position, strength, state);
