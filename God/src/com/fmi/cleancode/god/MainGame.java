@@ -2,30 +2,20 @@ package com.fmi.cleancode.god;
 
 import com.fmi.cleancode.god.simulator.Simulator;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class MainGame {
-    
-    public void StartGame(){
+
+    public void StartGame() {
         final Simulator simulator = new Simulator();
-        Thread t1 = new Thread(() -> simulator.Run());
-        Thread t2 = new Thread(() -> {
+        Thread threadMenu = new Thread(simulator::Run);
+        Thread threadGameUpdate = new Thread(() -> {
             try {
                 simulator.update();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("An error has occurred during the game!\n" + e.getLocalizedMessage());
             }
         });
-        t1.start();
-        t2.start();
-        }
+        threadMenu.start();
+        threadGameUpdate.start();
+    }
     //runs up the game with 2 threads:1 for menu and 1 for updates
 }

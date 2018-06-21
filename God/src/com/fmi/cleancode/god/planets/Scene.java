@@ -44,9 +44,10 @@ public class Scene {
     //creates a new ENTITY(or subclass unit) with random variables and adds it to the planet's population
     public void createPlanet() {
         Planet planet = new Planet();
-        if (planet.getName() != null)
+        if (planet.getName() != null) {
             planets.add(planet);
-        System.out.println("a new planet " + planet.getName() + " has been created...");
+            System.out.println("a new planet " + planet.getName() + " has been created...");
+        }
     }
 
     //adds a new planet(created with random variables) to the ArrayList

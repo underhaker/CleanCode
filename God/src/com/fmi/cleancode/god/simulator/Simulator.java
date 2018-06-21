@@ -17,7 +17,7 @@ public class Simulator {
     private final static int PLANET_SIZE = 300;
     //maximum elements that can be added at a time to a planet
     private final static int MAXIMUM_PLANETS = 9;
-    private static final String[] METHOD_NAMES = {"Analyze", "Sleep", "Eat", "SEARCHING_FOR_FOOD"};
+    private static final String[] METHOD_NAMES = {"analyze", "sleep", "eat", "searchingForFood"};
     private God player;
     private Scene scene;
 
@@ -212,7 +212,7 @@ public class Simulator {
 
     //chooses randomly an action
     private void executeAnAction(Planet pl, List<Entity> entities) throws InterruptedException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        RandomNumberGenerator rng = new RandomNumberGenerator();
+        RandomNumberGenerator generator = new RandomNumberGenerator();
         int actionRand;
         int attackRand;
         for (Entity entity1 : entities) {
@@ -221,9 +221,9 @@ public class Simulator {
                     if (pl.isDestroyed()) break;
                     Thread.sleep(500);
                     if (new Point2D(0, 0).getDistance(entity1.getPosition(), entity2.getPosition()) <= 20) {
-                        actionRand = rng.generateNumberRange(3);
+                        actionRand = generator.generateNumberRange(3);
                         if (actionRand % 3 == 0) {
-                            attackRand = rng.generateNumberRange(2);
+                            attackRand = generator.generateNumberRange(2);
                             if (attackRand % 2 == 0)
                                 entity1.attack(entity2);
                             else if (attackRand % 2 == 1)
@@ -266,31 +266,40 @@ public class Simulator {
 
     //boolean function which checks for valid input
     private boolean checkValidInput(String input) {
-        String[] strArr = input.split(" ");
+        String[] inputStringArray = input.split(" ");
         List<Planet> planets = scene.getPlanets();
-        if (strArr[0].equals("destroy")) {
+        if (inputStringArray[0].equals("destroy")) {
+            if (inputStringArray.length < 2) {
+                return false;
+            }
             for (Planet planet : planets) {
-                if (planet.getName().equals(strArr[1]))
+                if (planet.getName().equals(inputStringArray[1]))
                     return true;
             }
         }
 
-        if (strArr[0].equals("delete") && strArr[1].equals("population")) {
+        if (inputStringArray[0].equals("delete") && inputStringArray[1].equals("population")) {
+            if (inputStringArray.length < 3) {
+                return false;
+            }
             for (Planet pl : planets) {
-                if (pl.getName().equals(strArr[2]))
+                if (pl.getName().equals(inputStringArray[2]))
                     return true;
             }
         }
 
-        if (strArr[0].equals("add")) {
-            for (Planet pl : planets) {
-                if (pl.getName().equals(strArr[1])) {
-                    boolean isEntity = strArr[2].equals(EntityType.ENTITY.toString())
-                            || strArr[2].equals(EntityType.ANIMAL.toString())
-                            || strArr[2].equals(EntityType.HUMAN.toString())
-                            || strArr[2].equals(EntityType.GOD.toString());
+        if (inputStringArray[0].equals("add")) {
+            if (inputStringArray.length < 4) {
+                return false;
+            }
+            for (Planet planet : planets) {
+                if (planet.getName().equals(inputStringArray[1])) {
+                    boolean isEntity = inputStringArray[2].equals(EntityType.ENTITY.toString())
+                            || inputStringArray[2].equals(EntityType.ANIMAL.toString())
+                            || inputStringArray[2].equals(EntityType.HUMAN.toString())
+                            || inputStringArray[2].equals(EntityType.GOD.toString());
                     if (isEntity) {
-                        int entityCount = Integer.parseInt(strArr[3]);
+                        int entityCount = Integer.parseInt(inputStringArray[3]);
                         if (entityCount > 0 && entityCount < PLANET_SIZE) {
                             return true;
                         }
