@@ -32,4 +32,12 @@ public class Point2D {
         distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance;
     }
+
+    @Override
+    public String toString() {
+        return "Point2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
