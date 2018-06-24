@@ -15,7 +15,6 @@ import java.util.Scanner;
 
 public class Simulator {
     private final static int PLANET_SIZE = 300;
-    //maximum elements that can be added at a time to a planet
     private final static int MAXIMUM_PLANETS = 9;
     private static final String[] METHOD_NAMES = {"analyze", "sleep", "eat", "searchingForFood"};
     private God player;
@@ -85,6 +84,7 @@ public class Simulator {
 
     }
 
+    //updates each ENTITY's position and performs an action chosen by given methods
     public void update() throws InterruptedException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         while (true) {
             for (Planet planet : scene.getPlanets()) {
@@ -93,7 +93,6 @@ public class Simulator {
                     moveEntities(entities);
                     executeAnAction(planet, entities);
                     removeDeadEntities(entities);
-//                        doStuff(entities);
                 }
             }
         }
@@ -103,46 +102,44 @@ public class Simulator {
         System.out.println("Invalid command!");
     }
 
-    //starts the showMenu
     private void createPlanet() {
-        if (scene.getPlanets().size() < MAXIMUM_PLANETS)
+        if (scene.getPlanets().size() < MAXIMUM_PLANETS) {
             scene.createPlanet();
-        else
+        } else {
             System.out.println("No more planets can be added..");
+        }
     }
 
-    //creates a new Planet with random variables and adds it to ArrayList
-    private void destroyPopulation(String input) {
+    private void destroyPlanet(String input) {
         String str[] = input.split(" ");
-        String planetName = str[2];
-        for (Planet pl : scene.getPlanets()) {
-            if (pl.getName().equals(planetName)) {
-                pl.destroyPopulation();
+        String planetName = str[1];
+        for (Planet planet : scene.getPlanets()) {
+            if (planet.getName().equals(planetName)) {
+                scene.destroyPlanet(planet);
                 break;
             }
         }
     }
 
     //removes population from given planet
-    private void destroyPlanet(String input) {
-        String str[] = input.split(" ");
-        String planetName = str[1];
-        for (Planet pl : scene.getPlanets()) {
-            if (pl.getName().equals(planetName)) {
-                scene.destroyPlanet(pl);
+    private void destroyPopulation(String input) {
+        String inputArray[] = input.split(" ");
+        String planetName = inputArray[2];
+        for (Planet planet : scene.getPlanets()) {
+            if (planet.getName().equals(planetName)) {
+                planet.destroyPopulation();
                 break;
             }
         }
     }
 
-    //removes given planet from ArrayList
     private void showStatistics() {
-        for (Planet pl : scene.getPlanets())
-            System.out.println("Planet:" + pl.getName() + " population:" + pl.getPopulationCount());
+        for (Planet planet : scene.getPlanets()) {
+            System.out.println("Planet:" + planet.getName() + " population:" + planet.getPopulationCount());
+        }
     }
-    //updates each ENTITY's position and performs an action chosen by given methods
 
-    //prints each planet's population size
+    //adds n entities(or subclass units) to given planet
     private void addCreatures(String input) {
         String[] inputStringCommands = input.split(" ");
         String planetName = inputStringCommands[1];
@@ -182,7 +179,6 @@ public class Simulator {
         System.out.println(size + " " + entity + "s added to " + inputStringCommands[1] + "...");
     }
 
-    //adds n entities(or subclass units) to given planet
     private void showHelp() {
         System.out.println("Main showMenu");
         System.out.println("Type \"create\" to create a new planet.");
@@ -211,30 +207,35 @@ public class Simulator {
     }
 
     //chooses randomly an action
-    private void executeAnAction(Planet pl, List<Entity> entities) throws InterruptedException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private void executeAnAction(Planet planet, List<Entity> entities) throws InterruptedException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int actionRand;
         int attackRand;
         for (Entity entity1 : entities) {
             for (Entity entity2 : entities)
                 if (!entity1.equals(entity2)) {
-                    if (pl.isDestroyed()) break;
+                    if (planet.isDestroyed()) {
+                        break;
+                    }
                     Thread.sleep(500);
                     if (new Point2D(0, 0).getDistance(entity1.getPosition(), entity2.getPosition()) <= 20) {
                         actionRand = generator.generateNumberRange(3);
                         if (actionRand % 3 == 0) {
                             attackRand = generator.generateNumberRange(2);
-                            if (attackRand % 2 == 0)
+                            if (attackRand % 2 == 0) {
                                 entity1.attack(entity2);
-                            else if (attackRand % 2 == 1)
+                            } else if (attackRand % 2 == 1) {
                                 entity2.attack(entity1);
-                            if (!entity1.isAlive())
+                            }
+                            if (!entity1.isAlive()) {
                                 entities.remove(entity1);
-                            if (!entity2.isAlive())
+                            }
+                            if (!entity2.isAlive()) {
                                 entities.remove(entity2);
+                            }
                             break;
                         } else if (actionRand % 3 == 1 && (entity1.isAlive() && entity2.isAlive())) {
-                            scene.createCreature(pl, entity1.getEntity());
+                            scene.createCreature(planet, entity1.getEntity());
                             System.out.println("status:" + entity1.getName() + " and " + entity2.getName() + " have created a new creature..");
                             break;
                         } else if (actionRand % 3 == 2) {
@@ -264,7 +265,6 @@ public class Simulator {
     }
 
 
-    //boolean function which checks for valid input
     private boolean checkValidInput(String input) {
         String[] inputStringArray = input.split(" ");
         List<Planet> planets = scene.getPlanets();
@@ -282,8 +282,8 @@ public class Simulator {
             if (inputStringArray.length < 3) {
                 return false;
             }
-            for (Planet pl : planets) {
-                if (pl.getName().equals(inputStringArray[2]))
+            for (Planet planet : planets) {
+                if (planet.getName().equals(inputStringArray[2]))
                     return true;
             }
         }

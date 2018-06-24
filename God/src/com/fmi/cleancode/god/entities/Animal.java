@@ -15,29 +15,24 @@ public class Animal extends Entity {
         this.entity = EntityType.ANIMAL;
     }
 
-    //default constructor
     public Animal(String name, double energy, double size, double weight, Point2D position, double strength, State state) {
         super(name, energy, size, weight, position, strength, state);
         this.entity = EntityType.ENTITY;
     }
 
-    //constructor with parameters
     public void eat() {
         this.setState(State.EATING);
         System.out.println("status:" + this.getName() + " is " + this.getState() + "...");
     }
 
-    //action changing the state to EATING
     public void sleep() {
         this.setState(State.SLEEPING);
         System.out.println("status:" + this.getName() + " is " + this.getState() + "...");
     }
 
-    //action changing the state to SLEEPING
     public void searchingForFood() {
         this.setState(State.SEARCHING_FOR_FOOD);
         System.out.println("status:" + this.getName() + " is " + this.getState() + "...");
     }
-    //action changing the state to SEARCHING_FOR_FOOD
 
 }

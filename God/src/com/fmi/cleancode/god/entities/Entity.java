@@ -1,10 +1,10 @@
 package com.fmi.cleancode.god.entities;
 
 
-import com.fmi.cleancode.god.utils.Point2D;
-import com.fmi.cleancode.god.utils.RandomNumberGenerator;
 import com.fmi.cleancode.god.enums.EntityType;
 import com.fmi.cleancode.god.enums.State;
+import com.fmi.cleancode.god.utils.Point2D;
+import com.fmi.cleancode.god.utils.RandomNumberGenerator;
 
 public class Entity {
     final static private int PLANET_LENGTH = 400;
@@ -17,22 +17,21 @@ public class Entity {
     protected State state;
     protected EntityType entity;
     private boolean isAlive = true;
+    private RandomNumberGenerator generator;
 
-    //upper bound for entities to move
     public Entity() {
-        RandomNumberGenerator rng = new RandomNumberGenerator();
-        this.name = rng.generateName(EntityType.ENTITY);
-        this.energy = rng.generateStrength() * 2;
-        this.size = rng.generateNumber();
-        this.weight = rng.generateNumber();
-        this.position = new Point2D(rng.generateCoordinate(), rng.generateCoordinate());
-        this.strength = rng.generateStrength();
+        this.generator = new RandomNumberGenerator();
+        this.name = generator.generateName(EntityType.ENTITY);
+        this.energy = generator.generateStrength() * 2;
+        this.size = generator.generateNumber();
+        this.weight = generator.generateNumber();
+        this.position = new Point2D(generator.generateCoordinate(), generator.generateCoordinate());
+        this.strength = generator.generateStrength();
         this.state = State.UNKNOWN;
         this.isAlive = true;
         this.entity = EntityType.ENTITY;
     }
 
-    //default constructor with random values
     public Entity(String name, double energy, double size, double weight, Point2D position, double strength, State state) {
         this.name = name;
         this.energy = energy;
@@ -97,7 +96,7 @@ public class Entity {
     }
 
     public State getState() {
-        return state;
+        return this.state;
     }
 
     public void setState(State state) {
@@ -105,11 +104,11 @@ public class Entity {
     }
 
     public boolean isAlive() {
-        return isAlive;
+        return this.isAlive;
     }
 
     public void setAlive(boolean alive) {
-        isAlive = alive;
+        this.isAlive = alive;
     }
 
     public void attack(Entity ent) {
@@ -119,26 +118,25 @@ public class Entity {
         ent.setEnergy(ent.getEnergy() - this.getStrength());
         if (ent.getEnergy() <= 0) {
             System.out.println("status:" + ent.getName() + " has died...");
-            isAlive = false;
+            this.isAlive = false;
         }
     }
 
     //moves the ENTITY to X position(X is randomly generated)
     public void move() {
-        RandomNumberGenerator rng = new RandomNumberGenerator();
-        int randomPosition = rng.generateNumberRange(2);
+        int randomPosition = generator.generateNumberRange(2);
         int deltaPositionX;
         int deltaPositionY;
         if (randomPosition % 2 == 0) {
-            deltaPositionX = position.getX() + rng.generateCoordinate();
-            deltaPositionY = position.getY() + rng.generateCoordinate();
+            deltaPositionX = position.getX() + generator.generateCoordinate();
+            deltaPositionY = position.getY() + generator.generateCoordinate();
             if (deltaPositionX <= PLANET_LENGTH && deltaPositionY <= PLANET_LENGTH) {
                 position.setX(deltaPositionX);
                 position.setY(deltaPositionY);
             }
         } else if (randomPosition % 2 == 1) {
-            deltaPositionX = position.getX() - rng.generateCoordinate();
-            deltaPositionY = position.getY() - rng.generateCoordinate();
+            deltaPositionX = position.getX() - generator.generateCoordinate();
+            deltaPositionY = position.getY() - generator.generateCoordinate();
             if (deltaPositionX >= 0 && deltaPositionY >= 0) {
                 position.setX(deltaPositionX);
                 position.setY(deltaPositionY);

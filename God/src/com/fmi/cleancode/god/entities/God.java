@@ -15,7 +15,6 @@ public class God extends Human {
         this.entity = EntityType.ENTITY;
     }
 
-    //constructor with parameter values
     public God() {
 
         super();
@@ -24,7 +23,6 @@ public class God extends Human {
         this.entity = EntityType.GOD;
     }
 
-    //default constructor with random values
     public void createPlanet(List<Planet> planets) {
         Planet planet = new Planet();
         if (planet.getName() != null)

@@ -4,6 +4,7 @@ import com.fmi.cleancode.god.simulator.Simulator;
 
 public class MainGame {
 
+    //runs up the game with 2 threads:1 for menu and 1 for updates
     public void StartGame() {
         final Simulator simulator = new Simulator();
         Thread threadMenu = new Thread(simulator::Run);
@@ -17,5 +18,4 @@ public class MainGame {
         threadMenu.start();
         threadGameUpdate.start();
     }
-    //runs up the game with 2 threads:1 for menu and 1 for updates
 }

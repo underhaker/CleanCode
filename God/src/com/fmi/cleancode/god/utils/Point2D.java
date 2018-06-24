@@ -9,33 +9,27 @@ public class Point2D {
         this.y = y;
     }
 
-    //set Y coordinate
     public int getX() {
         return this.x;
     }
 
-    //constructor
     public void setX(int x) {
         this.x = x;
     }
 
-    //get X coordinate
     public int getY() {
         return this.y;
     }
 
-    //set X coordinate
     public void setY(int y) {
         this.y = y;
     }
 
-    //get Y coordinate
-    public double getDistance(Point2D p1, Point2D p2) {
+    public double getDistance(Point2D point1, Point2D point2) {
         double distance;
-        int deltaX = p1.getX() - p2.getX();
-        int deltaY = p1.getY() - p2.getY();
+        int deltaX = point1.getX() - point2.getX();
+        int deltaY = point1.getY() - point2.getY();
         distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance;
     }
-    //get distance between 2 points
 }

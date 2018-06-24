@@ -9,7 +9,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Planet {
     private String name;
     private List<Entity> population;
-    //Concurrent ArrayList for population on planet
     private boolean isDestroyed;
 
     public Planet() {
@@ -20,41 +19,33 @@ public class Planet {
 
     }
 
-    //default constructor
     public List<Entity> getPopulation() {
         return population;
     }
 
-    public void setPopulation(List<Entity> l) {
-        this.population = l;
+    public void setPopulation(List<Entity> population) {
+        this.population = population;
     }
 
-    //returns a list of the population
     public String getName() {
         return this.name;
     }
-    //returns size of population
 
-    //returns the name of the planet
     public int getPopulationCount() {
         return population.size();
     }
-    //sets this planet's population
 
     public boolean isDestroyed() {
         return this.isDestroyed;
     }
-    //returns true if planet is destroyed
 
-    public void setDestroyed() {
-        this.isDestroyed = true;
+    public void setDestroyed(boolean isDestroyed) {
+        this.isDestroyed = isDestroyed;
     }
-    //changes planet to destroyed
 
     public void addPopulation(Entity e) {
         population.add(e);
     }
-    //adds an ENTITY to population
 
     public void destroyPopulation() {
         population.clear();
